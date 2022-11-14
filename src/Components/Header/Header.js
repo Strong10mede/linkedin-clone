@@ -8,6 +8,7 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import ChatIcon from "@mui/icons-material/Chat";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 function Header() {
+  const user = {};
   const logOutOfApp = () => {};
   return (
     <div className="header">
