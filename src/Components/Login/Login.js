@@ -5,7 +5,8 @@ function Login() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [profilePic, setProfilePic] = useState("");
-
+  const loginHandler = () => {};
+  const register = () => {};
   return (
     <div className="login">
       <div className="login">
@@ -41,7 +42,16 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <button type="submit" onClick={loginHandler}>
+            Sign In
+          </button>
         </form>
+        <p>
+          Not a member?{" "}
+          <span className="login__register" onClick={register}>
+            Register Now
+          </span>
+        </p>
       </div>
     </div>
   );
