@@ -12,40 +12,37 @@ import InputOptions from "./InputOptions/InputOptions";
 import Post from "./Post/Post";
 import { selectUser } from "../../features/userSlice";
 import { useSelector } from "react-redux";
-import { getDocs, collection } from "firebase/firestore";
+import {
+  query,
+  orderBy,
+  addDoc,
+  collection,
+  onSnapshot,
+  serverTimestamp,
+} from "firebase/firestore";
 function Feed() {
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState("");
   const user = useSelector(selectUser);
 
-  useEffect(
-    () =>
-      getDocs(
-        collection(db, "posts")
-          .orderBy("timestamp", "desc")
-          .onSnapshot((snapshot) =>
-            setPosts(
-              snapshot.docs.map((doc) => ({
-                id: doc.id,
-                data: doc.data(),
-              }))
-            )
-          )
-      ),
-    []
-  );
+  useEffect(() => {
+    const readRef = collection(db, "posts");
+    const q = query(readRef, orderBy("timestamp", "desc"));
+    const unsub = onSnapshot(q, (snapshot) =>
+      setPosts(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
+    );
+    return unsub;
+  }, []);
 
   const sendPost = (e) => {
     e.preventDefault();
-    getDocs(
-      collection(db, "posts").add({
-        name: user?.displayName,
-        description: user?.email,
-        message: input,
-        photoUrl: user?.photoUrl,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-    );
+    addDoc(collection(db, "posts"), {
+      name: user?.displayName,
+      description: user?.email,
+      message: input,
+      photoUrl: user?.photoUrl,
+      timestamp: serverTimestamp(),
+    });
 
     setInput("");
   };
