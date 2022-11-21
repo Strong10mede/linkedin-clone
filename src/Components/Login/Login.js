@@ -1,12 +1,56 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../features";
+import { auth } from "../../firebase";
 import "./Login.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [profilePic, setProfilePic] = useState("");
-  const loginHandler = () => {};
-  const register = () => {};
+  const dispatch = useDispatch();
+  const loginHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const userAuth = await auth.signInWithEmailAndPassword(email, password);
+      console.log(userAuth);
+      dispatch(
+        login({
+          email: userAuth.user.email,
+          uid: userAuth.user.uid,
+          displayName: userAuth.user.displayName,
+          profilePic: userAuth.user.photoURL,
+        })
+      );
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  const register = async () => {
+    if (!name) {
+      return alert("Please enter a full Name");
+    }
+    try {
+      const userAuth = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      await userAuth.user.updateProfile({
+        displayName: name,
+        photoUrl: profilePic,
+      });
+      dispatch(
+        login({
+          email: userAuth.user.email,
+          uid: userAuth.user.uid,
+          displayName: name,
+          photoUrl: profilePic,
+        })
+      );
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <div className="login">
       <div className="login">
