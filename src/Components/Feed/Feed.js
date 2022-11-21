@@ -12,7 +12,7 @@ import InputOptions from "./InputOptions/InputOptions";
 import Post from "./Post/Post";
 import { selectUser } from "../../features/userSlice";
 import { useSelector } from "react-redux";
-
+import { getDocs, collection } from "firebase/firestore";
 function Feed() {
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState("");
@@ -20,29 +20,32 @@ function Feed() {
 
   useEffect(
     () =>
-      db
-        .collection("posts")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) =>
-          setPosts(
-            snapshot.docs.map((doc) => ({
-              id: doc.id,
-              data: doc.data(),
-            }))
+      getDocs(
+        collection(db, "posts")
+          .orderBy("timestamp", "desc")
+          .onSnapshot((snapshot) =>
+            setPosts(
+              snapshot.docs.map((doc) => ({
+                id: doc.id,
+                data: doc.data(),
+              }))
+            )
           )
-        ),
+      ),
     []
   );
 
   const sendPost = (e) => {
     e.preventDefault();
-    db.collection("posts").add({
-      name: user?.displayName,
-      description: user?.email,
-      message: input,
-      photoUrl: user?.photoUrl,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+    getDocs(
+      collection(db, "posts").add({
+        name: user?.displayName,
+        description: user?.email,
+        message: input,
+        photoUrl: user?.photoUrl,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+    );
 
     setInput("");
   };
