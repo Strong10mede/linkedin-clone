@@ -4,7 +4,7 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import { Avatar } from "@material-ui/core";
+import { Avatar } from "@mui/material";
 import InputOptions from "../InputOptions/InputOptions";
 const Post = forwardRef(({ name, description, message, photoUrl }, ref) => {
   return (
