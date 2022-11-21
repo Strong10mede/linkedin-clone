@@ -12,6 +12,7 @@ import InputOptions from "./InputOptions/InputOptions";
 import Post from "./Post/Post";
 import { selectUser } from "../../features/userSlice";
 import { useSelector } from "react-redux";
+
 function Feed() {
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState("");
