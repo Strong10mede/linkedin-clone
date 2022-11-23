@@ -14,6 +14,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //onAuthStateChanged is used here to get the current user who is logged in.
     auth.onAuthStateChanged((userAuth) => {
       console.log("onAuthStateChanged App.js");
       if (userAuth) {
