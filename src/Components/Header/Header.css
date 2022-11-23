@@ -3,7 +3,7 @@
   top: 0.625rem;
   z-index: 999;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   border-bottom: 0.0125rem solid lightgrey;
   padding: 0.625rem 0;
   width: 100%;

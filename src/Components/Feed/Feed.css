@@ -1,5 +1,6 @@
 .feed {
   flex: 0.6;
+  position: relative;
   margin: 0 1.25rem;
 }
 
@@ -9,6 +10,10 @@
   padding-bottom: 1.25rem;
   border-radius: 0.625rem;
   margin-bottom: 1.25rem;
+  position: fixed;
+  bottom: 1rem;
+  width: 95%;
+  z-index: 99;
 }
 
 .feed__input {

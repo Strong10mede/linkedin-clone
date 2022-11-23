@@ -79,7 +79,7 @@ function Feed() {
         </div>
       </div>
 
-      <FlipMove>
+      <FlipMove style={{ marginBottom: "5rem" }}>
         {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
           <Post
             key={id}
